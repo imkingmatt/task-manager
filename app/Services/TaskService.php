@@ -8,9 +8,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskService
 {
-    public function listForUser(User $user, ?string $search = null): LengthAwarePaginator
+    public function listOwnedBy(User $user, ?string $search = null): LengthAwarePaginator
     {
-        $query = $user->isAdmin() ? Task::query()->with('user') : $user->tasks();
+        $query = $user->tasks();
+
+        if ($search) {
+            $query->where('title', 'like', "%{$search}%");
+        }
+
+        return $query->latest()->paginate(10);
+    }
+
+    public function listAll(?string $search = null): LengthAwarePaginator
+    {
+        $query = Task::query()->with('user');
 
         if ($search) {
             $query->where('title', 'like', "%{$search}%");

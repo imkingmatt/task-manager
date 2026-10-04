@@ -10,6 +10,11 @@
         @endif
 
         <div class="mb-4 flex justify-between items-center">
+            <form method="GET" action="{{ route('tasks.index') }}" class="mb-4">
+                <input type="text" name="search" value="{{ request('search') }}"
+                    placeholder="{{ __('Search tasks...') }}"
+                    class="border-gray-300 rounded-md shadow-sm w-full sm:w-64">
+            </form>
             <a href="{{ route('tasks.create') }}"
                 class="px-4 py-2 bg-gray-800 text-white rounded">{{ __('+ New Task') }}</a>
         </div>

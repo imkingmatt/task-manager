@@ -16,7 +16,7 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $tasks = $this->taskService->listForUser($request->user(), $request->query('search'));
+        $tasks = $this->taskService->listOwnedBy($request->user(), $request->query('search'));
         return view('tasks.index', compact('tasks'));
     }
 
