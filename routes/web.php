@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Admin\TaskController as AdminTaskController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +21,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('tasks', TaskController::class)->except('show');
     Route::patch('tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('tasks.toggle');
+});
+
+Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('tasks', AdminTaskController::class)->except('show');
 });
 
 require __DIR__.'/auth.php';

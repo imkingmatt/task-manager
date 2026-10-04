@@ -8,6 +8,7 @@ use App\Services\TaskService;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
+use App\Http\Controllers\Admin\TaskController as AdminTaskController;
 
 class TaskController extends Controller
 {
@@ -44,5 +45,16 @@ class TaskController extends Controller
         $this->authorize('update', $task);
         $this->taskService->toggleComplete($task);
         return back();
+    }
+
+    public function create()
+    {
+        return view('tasks.create');
+    }
+
+    public function edit(Task $task)
+    {
+        $this->authorize('update', $task);
+        return view('tasks.edit', compact('task'));
     }
 }
